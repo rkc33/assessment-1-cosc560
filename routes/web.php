@@ -1,15 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('home');
-});
-
 use App\Http\Controllers\PostController;
 
-Route::get('/all', [PostController::class, 'index']);
-Route::get('/create', [PostController::class, 'create']);
-Route::get('/edit/{id}', [PostController::class, 'edit']);
-Route::post('/save', [PostController::class, 'store']);
-Route::get('/delete/{id}', [PostController::class, 'destroy']);
+// Home page showing list of posts
+Route::get('/', [PostController::class, 'index'])->name('home');
+
+// Standard RESTful CRUD routes (index, create, store, show, edit, update, destroy)
+Route::resource('posts', PostController::class);
+
+// Optional: Alias for '/all' to show all posts
+Route::get('/all', [PostController::class, 'index'])->name('posts.all');
